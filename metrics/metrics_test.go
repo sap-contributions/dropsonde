@@ -142,4 +142,12 @@ var _ = Describe("Metrics", func() {
 			Consistently(newMetricBatcher.CloseCalled).ShouldNot(BeCalled())
 		})
 	})
+
+	Context("BatchCounter", func() {
+		It("gets a name", func() {
+			metricBatcher.BatchCounterOutput.Ret0 <- nil
+			metricBatcher.BatchCounter("test")
+			Eventually(metricBatcher.BatchCounterInput).Should(BeCalled(With("test")))
+		})
+	})
 })

@@ -1,18 +1,18 @@
 // Package metrics provides a simple API for sending value and counter metrics
 // through the dropsonde system.
 //
-// Use
+// # Use
 //
 // See the documentation for package dropsonde for configuration details.
 //
 // Importing package dropsonde and initializing will initial this package.
 // To send metrics use
 //
-//		metrics.SendValue(name, value, unit)
+//	metrics.SendValue(name, value, unit)
 //
 // for sending known quantities, and
 //
-//		metrics.IncrementCounter(name)
+//	metrics.IncrementCounter(name)
 //
 // to increment a counter. (Note that the value of the counter is maintained by
 // the receiver of the counter events, not the application that includes this
@@ -21,6 +21,7 @@ package metrics
 
 import (
 	"github.com/cloudfoundry/dropsonde/metric_sender"
+	"github.com/cloudfoundry/dropsonde/metricbatcher"
 	"github.com/cloudfoundry/sonde-go/events"
 )
 
@@ -52,6 +53,7 @@ type MetricBatcher interface {
 	BatchIncrementCounter(name string)
 	BatchAddCounter(name string, delta uint64)
 	Close()
+	BatchCounter(name string) metricbatcher.BatchCounterChainer
 }
 
 // Initialize prepares the metrics package for use with the automatic Emitter.
